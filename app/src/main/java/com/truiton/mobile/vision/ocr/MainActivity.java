@@ -123,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
                         Plaque = blocks;   // à partir de maintenant on travaille sur la plaque pour la suite
 
                         Log.d("Valeur du block", blocks);
+
+                        //Lancer ici la suite de l'application
+
                         /*
                         scanResults.setText(scanResults.getText() + "---------" + "\n");
                         scanResults.setText(scanResults.getText() + "Lines: " + "\n");
