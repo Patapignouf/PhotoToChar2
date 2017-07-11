@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             if (Plaque.getPlaques().length()>15) {
                                 alert = new android.app.AlertDialog.Builder(this);
                                 alert.setTitle("Êtes-vous sûr qu'il s'agit bien d'une plaque d'immatriculation ?");
-                                alert.setMessage("");
+                                //alert.setMessage("");
                                 // Set an EditText view to get user input
                                 //input = new EditText(this);
                                 //alert.setView(input);
