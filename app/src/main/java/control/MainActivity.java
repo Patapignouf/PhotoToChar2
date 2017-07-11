@@ -2,21 +2,25 @@ package control;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String SAVED_INSTANCE_URI = "uri";
     private static final String SAVED_INSTANCE_RESULT = "result";
     private static CheckPlate Plaque ;
+    private android.app.AlertDialog.Builder alert;
+    private EditText input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +72,14 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 //C'est barbare ça faudra le changer plus tard pour faire quelque chose de propre
                 startActivity(intent);
+                */
+
+                scanResults.setText("");
+
             }
         });
 
@@ -126,11 +137,38 @@ public class MainActivity extends AppCompatActivity {
                         if (Plaque.checklong()){
                             Log.d("CheckPlaque", "La plaque est de la bonne longueur");
 
+                            if (Plaque.getPlaques().length()>15) {
+                                alert = new android.app.AlertDialog.Builder(this);
+                                alert.setTitle("Êtes-vous sûr qu'il s'agit bien d'une plaque d'immatriculation ?");
+                                alert.setMessage("");
+                                // Set an EditText view to get user input
+                                //input = new EditText(this);
+                                //alert.setView(input);
+                                alert.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        scanResults.setText("");
+                                        //Log.d("infodebug","On a cliqué sur le bouton date 2 !");
+                                    }
+                                });
+
+                                alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                                        //Log.d("infodebug","On a cliqué sur le bouton date 2 !");
+                                    }
+                                });
+                                alert.show();
+                            }
+
+
+
+                            Plaque.formatcontent();
+                            scanResults.setText(scanResults.getText() +"Bon format :" + Plaque.getPlaques() + "\n");
 
                         } else {
                             Log.d("CheckPlaque", "La plaque est trop petite");
                         }
-                        Plaque.formatcontent();
+
                         Log.d("Valeur du block", blocks);
 
                         //Lancer ici la suite de l'application
