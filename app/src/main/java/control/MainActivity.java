@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE_PERMISSION = 20;
     private static final String SAVED_INSTANCE_URI = "uri";
     private static final String SAVED_INSTANCE_RESULT = "result";
-    private static String Plaque = "";
+    private static CheckPlate Plaque ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.button);
         Button button2 = (Button) findViewById(R.id.button2);
         scanResults = (TextView) findViewById(R.id.results);
+
 
 
         if (savedInstanceState != null) {
@@ -120,8 +121,16 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         scanResults.setText(scanResults.getText() + "Plaque : " + "\n");
                         scanResults.setText(scanResults.getText() + blocks + "\n");
-                        Plaque = blocks;   // à partir de maintenant on travaille sur la plaque pour la suite
+                        CheckPlate Plaque = new CheckPlate();
+                        Plaque.setPlaques(blocks);   // à partir de maintenant on travaille sur la plaque pour la suite
+                        if (Plaque.checklong()){
+                            Log.d("CheckPlaque", "La plaque est de la bonne longueur");
 
+
+                        } else {
+                            Log.d("CheckPlaque", "La plaque est trop petite");
+                        }
+                        Plaque.formatcontent();
                         Log.d("Valeur du block", blocks);
 
                         //Lancer ici la suite de l'application
