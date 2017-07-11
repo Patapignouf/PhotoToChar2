@@ -32,10 +32,17 @@ public class CheckPlate {
         String test = Plaques;
         String test2 = "";
         int taille = test.length();
-
+        int compteurL = 0;
+        int marqueurL = 0;
         for(int i = 0; i < taille; i++){
             if (Character.isLetter(test.charAt(i))){
                 test2=test2+test.charAt(i);
+                compteurL++;
+                Log.d("format2", String.valueOf(compteurL));
+                if ((compteurL==3)&&(i<4)) {
+                    marqueurL=1;
+                    Log.d("format2", "On veut retirer une lettre au début");
+                }
             } else if (Character.isDigit(test.charAt(i))) {
                 test2=test2+test.charAt(i);
             } else {
@@ -43,8 +50,24 @@ public class CheckPlate {
             }
 
         }
-        Log.d("format", test);
-        Log.d("format", test2);
+
+        if (marqueurL==1){
+            test2=test2.substring(1,test2.length());
+            Log.d("format2", "On retire une lettre au début");
+            Log.d("format2", test2);
+        }
+
+        if (compteurL>=4){
+
+                test2=test2.substring(0,7);
+                Log.d("format2", "On retire les chiffres à la fin");
+            Log.d("format2", test2);
+
+
+        }
+
+        //Log.d("format", test);
+        //Log.d("format", test2);
         Plaques=test2;
     }
 
