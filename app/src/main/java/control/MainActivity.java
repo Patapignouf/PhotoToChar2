@@ -1,4 +1,4 @@
-package com.truiton.mobile.vision.ocr;
+package control;
 
 import android.Manifest;
 import android.content.Context;

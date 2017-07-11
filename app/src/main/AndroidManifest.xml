@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.truiton.mobile.vision.ocr"
+<manifest package="control"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-feature
@@ -18,7 +18,7 @@
             android:value="ocr"/>
 
 
-        <activity android:name=".MainActivity"
+        <activity android:name="control.MainActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
