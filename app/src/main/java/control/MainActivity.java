@@ -46,12 +46,17 @@ public class MainActivity extends AppCompatActivity {
     private android.app.AlertDialog.Builder alert;
     private EditText input;
 
+    String blocks = "";
+    String lines = "";
+    String words = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button = (Button) findViewById(R.id.button);
         Button button2 = (Button) findViewById(R.id.button2);
+        Button button3 = (Button) findViewById(R.id.button3);
         scanResults = (TextView) findViewById(R.id.results);
 
 
@@ -77,8 +82,23 @@ public class MainActivity extends AppCompatActivity {
                 //C'est barbare ça faudra le changer plus tard pour faire quelque chose de propre
                 startActivity(intent);
                 */
-
+                blocks = "";
+                lines = "";
+                words = "";
                 scanResults.setText("");
+
+            }
+        });
+
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                //Ici on va lancer le traitement de la plaque pour un accès à la blockchain
+                startActivity(intent);
+                */
+
 
             }
         });
@@ -111,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 if (detector.isOperational() && bitmap != null) {
                     Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                     SparseArray<TextBlock> textBlocks = detector.detect(frame);
-                    String blocks = "";
-                    String lines = "";
-                    String words = "";
+                    blocks = "";
+                    lines = "";
+                    words = "";
                     for (int index = 0; index < textBlocks.size(); index++) {
                         //extract scanned text blocks here
                         TextBlock tBlock = textBlocks.valueAt(index);
@@ -232,5 +252,13 @@ public class MainActivity extends AppCompatActivity {
 
         return BitmapFactory.decodeStream(ctx.getContentResolver()
                 .openInputStream(uri), null, bmOptions);
+    }
+
+    public static CheckPlate getPlaque() {
+        return Plaque;
+    }
+
+    public static void setPlaque(CheckPlate plaque) {
+        Plaque = plaque;
     }
 }
