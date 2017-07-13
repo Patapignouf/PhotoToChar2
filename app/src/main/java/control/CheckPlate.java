@@ -71,7 +71,15 @@ public class CheckPlate {
         Plaques=test2;
     }
 
+    public boolean isEmpty() {
+        Log.d("Taille Plaque",String.valueOf(Plaques.length()));
+        if (Plaques.length()==0){
+            return true;
+        } else {
+            return false;
+        }
 
+    }
 
     public String getPlaques() {
         return Plaques;

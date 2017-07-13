@@ -57,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.button);
         Button button2 = (Button) findViewById(R.id.button2);
         Button button3 = (Button) findViewById(R.id.button3);
+        Button button4 = (Button) findViewById(R.id.button4);
         scanResults = (TextView) findViewById(R.id.results);
-
+        Plaque = new CheckPlate();
 
 
         if (savedInstanceState != null) {
@@ -93,12 +94,21 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+
+                Intent intent = new Intent(MainActivity.this, ShowInfo.class);
                 //Ici on va lancer le traitement de la plaque pour un accès à la blockchain
                 startActivity(intent);
-                */
 
+
+
+            }
+        });
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //On va chercher à éditer les plaques
+                editplaques();
 
             }
         });
@@ -152,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         scanResults.setText(scanResults.getText() + "Plaque : " + "\n");
                         scanResults.setText(scanResults.getText() + blocks + "\n");
-                        CheckPlate Plaque = new CheckPlate();
+
                         Plaque.setPlaques(blocks);   // à partir de maintenant on travaille sur la plaque pour la suite
                         if (Plaque.checklong()){
                             Log.d("CheckPlaque", "La plaque est de la bonne longueur");
@@ -235,6 +245,36 @@ public class MainActivity extends AppCompatActivity {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(imageUri);
         this.sendBroadcast(mediaScanIntent);
+    }
+
+
+
+
+    private void editplaques() {
+
+        if (!Plaque.isEmpty()) {
+            Log.d("CheckEdit","Je rentre dans l'édit");
+            alert = new android.app.AlertDialog.Builder(this);
+            alert.setTitle("Veuillez corrigez la plaque : " + Plaque.getPlaques());
+            alert.setMessage("");
+            // Set an EditText view to get user input
+            input = new EditText(this);
+            alert.setView(input);
+            alert.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    //Log.d("infodebug","On a cliqué sur le bouton date 2 !");
+                }
+            });
+
+            alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    scanResults.setText(input.getText());
+                    //Log.d("infodebug","On a cliqué sur le bouton date 2 !");
+                }
+            });
+            alert.show();
+        }
     }
 
     private Bitmap decodeBitmapUri(Context ctx, Uri uri) throws FileNotFoundException {
